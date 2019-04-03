@@ -1,0 +1,26 @@
+//考察内容：贪心算法、字符串、动态规划、回溯算法
+//注意与 010.Regular Expression Matching 正则匹配的题目区分开来
+
+class Solution {
+public:
+    bool isMatch(string s, string p) {
+        int i = 0, j = 0, iStar = -1, jStar = -1;
+        while(i < s.size()) {
+            if(s[i] == p[j] || p[j] == '?') {  //情况(1)
+                ++i;
+                ++j;
+            }
+            else if(p[j] == '*') {  //情况(2)
+                iStar = i;
+                jStar = j++;  //jStar赋为j，此时j再自增1
+            }
+            else if(iStar >= 0) {  //注意这一种情况（若在接下来一次的比较中位置i与位置j的字符不同则j继续回到jStar+1的位置“重头再来”）
+                i = ++iStar;
+                j = jStar + 1;
+            }
+            else return false;
+        }
+        while(j < p.size() && p[j] == '*') ++j;  //匹配完了s中的所有字符，但是之后我们还要检查p串，此时没匹配完的p串里只能剩星号，不能有其他的字符
+        return j == p.size();  //将连续的星号过滤掉，如果j不等于p的长度，则返回false
+    }
+};
