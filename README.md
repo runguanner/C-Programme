@@ -1,2 +1,1 @@
 # Leetcode
-Leetcode解析
