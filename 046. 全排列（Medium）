@@ -1,0 +1,48 @@
+// 递归、DFS
+
+// 需要用到一个visited数组来标记某个数字是否访问过，然后在DFS递归函数循环应从头开始，而不是从level开始。
+// level其本质是记录当前已经拼出的个数，一旦其达到了nums数组的长度，说明此时已经是一个全排列了，因为再加数字的话，就会超出。
+
+class Solution {
+public:
+    vector<vector<int>> permute(vector<int>& nums) {
+        vector<vector<int>> res;
+        vector<int> out, visited(nums.size(), 0);
+        permuteDFS(nums, 0, visited, out, res);
+        return res;
+    }
+    
+    void permuteDFS(vector<int>& nums, int level, vector<int>& visited, vector<int>& out, vector<vector<int>>& res) {
+        if(level == nums.size()) {
+            res.push_back(out);
+            return;
+        }
+        for(int i = 0; i < nums.size(); i++) {
+            if(visited[i] == 1) continue;
+            visited[i] == 1;
+            out.push_back(nums[i]);
+            permuteDFS(nums, level + 1, visited, out, res);
+            out.pop_back();
+            visited[i] = 0;
+        }
+    }
+};
+
+
+class Solution {
+public:
+    vector<vector<int>> permute(vector<int>& nums) {
+        vector<vector<int>> res;
+        permuteDFS(nums, 0, res);
+        return res;
+    }
+    
+    void permuteDFS(vector<int>& nums, int start, vector<vector<int>>& res) {
+        if (start >= nums.size()) res.push_back(nums);
+        for (int i = start; i < nums.size(); ++i) {
+            swap(nums[start], nums[i]);
+            permuteDFS(nums, start + 1, res);
+            swap(nums[start], nums[i]);
+        }
+    }
+};
