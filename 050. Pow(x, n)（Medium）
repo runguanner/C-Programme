@@ -1,0 +1,34 @@
+// 数学、二分法
+
+class Solution {
+public:
+    double myPow(double x, int n) {
+        if (n == 0) return 1;
+        double half = myPow(x, n / 2);
+        if (n % 2 == 0) return half * half;  //此时n是偶数，直接把上次递归得到的值算个平方返回即可
+        if (n > 0) return half * half * x;  //如果是奇数，则还需要乘上个x的值
+        return half * half / x;  //对于n是负数的情况，解析如下
+    }
+};
+
+// n为负数的情况：
+// 如：myPow(2, -1)
+// 则：half = myPow(2, -1/2)，其中-1/2=0, 那么half得到的值为1.
+// 再往下走，不能整除2，且-1为负，所以就走到最后一个else了
+// return half * half / x，
+// 因为指数是负数，所以要2变成分母，就是除以2了，得到二分之一这个结果。
+
+
+// 迭代的解法
+
+class Solution {
+public:
+    double myPow(double x, int n) {
+        double res = 1.0;
+        for (int i = n; i != 0; i /= 2) {  //首先让i初始化为n，然后看i是否是2的倍数，是的话x乘以本身，否则res乘以x，i每次循环缩小一半，直到为0停止循环
+            if (i % 2 != 0) res *= x;
+            x *= x;  
+        }
+        return n < 0 ? 1 / res : res;  //最后看n的正负，如果为负，返回其倒数
+    }
+};
