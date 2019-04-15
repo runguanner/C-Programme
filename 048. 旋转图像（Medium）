@@ -1,0 +1,61 @@
+// 数组
+
+// 分两步变形
+// 1  2  3           7  2  1            7  4  1
+// 4  5  6    -->    4  5  6　　 -->  　 8  5  2　　
+// 7  8  9           9  8  3　　　　　   9  6  3
+
+class Solution {
+public:
+    void rotate(vector<vector<int> > &matrix) {
+        int n = matrix.size();
+        for (int i = 0; i < n / 2; ++i) {  //注意循环结束条件
+            for (int j = i; j < n - 1 - i; ++j) {
+                int tmp = matrix[i][j];
+                matrix[i][j] = matrix[n - 1 - j][i];
+                matrix[n - 1 - j][i] = matrix[n - 1 - i][n - 1 - j];
+                matrix[n - 1 - i][n - 1 - j] = matrix[j][n - 1 - i];
+                matrix[j][n - 1 - i] = tmp;
+            }
+        }
+    }
+};
+
+
+// 首先以从对角线为轴翻转，然后再以x轴中线上下翻转即可得到结果。
+// 1  2  3　　　 　　 9  6  3　　　　　   7  4  1
+// 4  5  6　　-->　　 8  5  2　　 -->    8  5  2　　
+// 7  8  9 　　　 　　7  4  1　　　　　   9  6  3
+
+class Solution {
+public:
+    void rotate(vector<vector<int> > &matrix) {
+        int n = matrix.size();
+        for (int i = 0; i < n - 1; ++i) {  //首先以从对角线为轴翻转
+            for (int j = 0; j < n - i; ++j) {
+                swap(matrix[i][j], matrix[n - 1- j][n - 1 - i]);
+            }
+        }
+        for (int i = 0; i < n / 2; ++i) {  //然后再以x轴中线上下翻转即可得到结果
+            for (int j = 0; j < n; ++j) {
+                swap(matrix[i][j], matrix[n - 1 - i][j]);
+            }
+        }
+    }
+};
+
+
+// 首先对原数组取其转置矩阵，然后再以y轴中线左右翻转即可得到结果。
+
+class Solution {
+public:
+    void rotate(vector<vector<int> > &matrix) {
+        int n = matrix.size();
+        for (int i = 0; i < n; ++i) {
+            for (int j = i + 1; j < n; ++j) {
+                swap(matrix[i][j], matrix[j][i]);
+            }
+            reverse(matrix[i].begin(), matrix[i].end());
+        }
+    }
+};
