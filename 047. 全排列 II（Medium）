@@ -1,0 +1,47 @@
+// 递归、DFS
+
+// 这道题是之前那道 Permutations 的延伸，由于输入数组有可能出现重复数字，如果按照之前的算法运算，会有重复排列产生。
+// 要避免重复的产生，在递归函数中要判断前面一个数和当前的数是否相等，如果相等，且其对应的visited中的值为1，当前的数字才能使用，否则需要跳过，这样就不会产生重复排列了
+
+class Solution {
+public:
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        vector<vector<int>> res;
+        vector<int> out, visited(nums.size(), 0);
+        sort(nums.begin(), nums.end());
+        permuteUniqueDFS(nums, 0, visited, out, res);  //用数组out来拼排列结果，这里的level其实就是当前已经拼成的个数，其实就是out数组的长度
+        return res;
+    }
+    
+    void permuteUniqueDFS(vector<int>& nums, int level, vector<int>& visited, vector<int>& out, vector<vector<int>>& res) {
+        if(level >= nums.size()) {res.push_back(out); return;}
+        for(int i = 0; i < nums.size(); i++) {  //弄清楚递归函数的for循环中两个if的剪枝的意思
+            if(visited[i] == 1) continue;  //不能重复使用数字就靠visited数组来保证，这就是第一个if剪枝的意义所在
+            if(i > 0 && nums[i] == nums[i - 1] && visited[i - 1] == 0) continue;  //第二个if剪枝的意义，这里说当前数字和前一个数字相同，且前一个数字的visited值为0的时候，必须跳过
+            visited[i] = 1;
+            out.push_back(nums[i]);
+            permuteUniqueDFS(nums, level + 1, visited, out, res);
+            out.pop_back();
+            visited[i] = 0;
+        }
+    }
+};
+
+
+class Solution {
+public:
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        set<vector<int>> res;  //用TreeSet来保存结果，利用其不会有重复项的特点
+        permute(nums, 0, res);
+        return vector<vector<int>> (res.begin(), res.end());
+    }
+    void permute(vector<int>& nums, int start, set<vector<int>>& res) {
+        if (start >= nums.size()) res.insert(nums);
+        for (int i = start; i < nums.size(); ++i) {  //判断如果i和start不相同，但是 nums[i] 和 nums[start] 相同的情况下跳过，继续下一个循环
+            if (i != start && nums[i] == nums[start]) continue;
+            swap(nums[i], nums[start]);
+            permute(nums, start + 1, res);
+            swap(nums[i], nums[start]);
+        }
+    }
+};
