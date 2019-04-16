@@ -1,0 +1,46 @@
+// 数组、分治算法、动态规划
+
+// 时间复杂度：O(n)
+// Kadane's Algorithm
+
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        int res = INT_MIN, curSum = 0;
+        for(int num : nums) {
+            curSum = max(curSum + num, num);  //每遍历一个num，比较之间curSum+num和目前的num的大小，然后保存到curSum
+            res = max(res, curSum);
+        }
+        return res;
+    }
+};
+
+
+// 时间复杂度：O(nlgn)
+// 分治法(Divide and Conquer Approach),类似于二分搜索法。
+// 最大子串和的区间有以下三种情况（low，high为左右边界，mid为(low+high)/2）：(1)区间完全在A[low,mid-1]、(2)区间完全在A[mid+1,high]、(3)区间包含有A[mid]
+
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        if (nums.empty()) return 0;
+        return helper(nums, 0, (int)nums.size() - 1);
+    }
+    int helper(vector<int>& nums, int left, int right) {
+        if (left >= right) return nums[left];
+        int mid = left + (right - left) / 2;
+        int lmax = helper(nums, left, mid - 1);  //左边最大值（1）
+        int rmax = helper(nums, mid + 1, right);  //右边最大值（2）
+        int mmax = nums[mid], t = mmax;  //计算包含中间的连续最大和
+        for (int i = mid - 1; i >= left; --i) {  //先向左边延申
+            t += nums[i];
+            mmax = max(mmax, t);
+        }
+        t = mmax;
+        for (int i = mid + 1; i <= right; ++i) {  //后向右边延申
+            t += nums[i];
+            mmax = max(mmax, t);
+        }  //（3）
+        return max(mmax, max(lmax, rmax));  //（1、2、3）取max
+    }
+};
