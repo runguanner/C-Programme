@@ -1,0 +1,40 @@
+// 回溯算法
+
+// 对于这类问题，只能使用穷举法，就是尝试所有的组合
+// 这个逻辑非常适合用递归来做：每放置一个新的皇后的时候，必须要保证跟之前的所有皇后不能冲突，若发生了冲突，说明当前位置不能放，要重新找地方。
+
+class Solution {
+public:
+    vector<vector<string>> solveNQueens(int n) {
+        vector<vector<string>> res;
+        vector<string> queens(n, string(n, '.'));  //先建立一个长度为 nxn 的全是点的数组 queens，然后从第0行开始调用递归
+        helper(0, queens, res);
+        return res;
+    }
+    void helper(int curRow, vector<string>& queens, vector<vector<string>>& res) {  //递归函数
+        int n = queens.size();
+        if (curRow == n) {  //在递归函数中，首先判断当前行数是否已经为n，是则说明所有的皇后都已经成功放置好了，此时只要将 queens 数组加入结果 res 中即可。
+            res.push_back(queens);
+            return;
+        }
+        for (int i = 0; i < n; ++i) {  //否则就遍历该行的所有列(i为列col)的位置，行跟列的位置都确定后
+            if (isValid(queens, curRow, i)) {  //验证当前位置是否会产生冲突，那么就需要使用一个子函数来判断
+                queens[curRow][i] = 'Q';
+                helper(curRow + 1, queens, res);
+                queens[curRow][i] = '.';
+            }
+        }
+    }
+    bool isValid(vector<string>& queens, int row, int col) {  //判别行列是否发生冲突
+        for (int i = 0; i < row; ++i) {  //首先验证该列是否有冲突，就遍历之前的所有行，若某一行相同列也有皇后，则冲突返回false
+            if (queens[i][col] == 'Q') return false;
+        }
+        for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; --i, --j) {  //再验证两个对角线是否冲突，就是一些坐标转换（右对角线）
+            if (queens[i][j] == 'Q') return false;
+        }
+        for (int i = row - 1, j = col + 1; i >= 0 && j < queens.size(); --i, ++j) {  //验证左对角线
+            if (queens[i][j] == 'Q') return false;
+        }
+        return true;
+    }
+};
