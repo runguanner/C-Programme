@@ -1,0 +1,59 @@
+// 数组
+
+// 对于这种螺旋遍历的方法，重要的是要确定上下左右四条边的位置，那么初始化的时候，上边up就是0，下边down就是m-1，左边left是0，右边right是n-1。
+
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int>>& matrix) {
+        if (matrix.empty() || matrix[0].empty()) return {};
+        int m = matrix.size(), n = matrix[0].size();
+        vector<int> res;
+        int up = 0, down = m - 1, left = 0, right = n - 1;
+        while (true) {
+            for (int j = left; j <= right; ++j) res.push_back(matrix[up][j]);
+            if (++up > down) break;
+            for (int i = up; i <= down; ++i) res.push_back(matrix[i][right]);
+            if (--right < left) break;
+            for (int j = right; j >= left; --j) res.push_back(matrix[down][j]);
+            if (--down < up) break;
+            for (int i = down; i >= up; --i) res.push_back(matrix[i][left]);
+            if (++left > right) break;
+        }
+        return res;
+    }
+};
+
+
+// 首先从给定的 m x n 的矩阵中算出按螺旋顺序有几个环（环数的计算公式是 min(m, n) / 2），注意最终间的环可以是一个数字，也可以是一行或者一列。
+
+// 1　2　3
+// 4　5　6
+// 7　8　9  打印为：1、2、3 --> 6、9 --> 8、7 --> 4 --> 5
+// 定义p，q为当前环的高度和宽度，当p或者q为1时，表示最后一个环只有一行或者一列，可以跳出循环。(此题的难点在于下标的转换)
+
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int>>& matrix) {
+        if(matrix.empty() || matrix[0].empty()) return {};
+        int m = matrix.size(), n = matrix[0].size();
+        vector<int> res;
+        int c = m > n ? (n + 1) / 2 : (m + 1) / 2;
+        int p = m, q = n;
+        for(int i = 0; i < c; ++i, p -= 2, q -= 2) {  
+            for(int col = i; col < i + q; ++col) {  //从左到右
+                res.push_back(matrix[i][col]);
+            }
+            for(int row = i + 1; row < i + p; ++row) {  //从上到下
+                res.push_back(matrix[row][i + q - 1]);
+            }
+            if(q == 1 || p == 1) break;
+            for (int col = i + q - 2; col >= i; --col) {  //从右到左
+                res.push_back(matrix[i + p - 1][col]);
+            }
+            for (int row = i + p - 2; row > i; --row) {  //从下到上
+                res.push_back(matrix[row][i]);
+            }
+        }
+        return res;
+    }
+};
