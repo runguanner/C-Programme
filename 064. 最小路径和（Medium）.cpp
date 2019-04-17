@@ -2,8 +2,6 @@
 
 // 维护一个二维的dp数组，其中dp[i][j]表示当前位置的最小路径和，递推式也容易写出来 dp[i][j] = grid[i][j] + min(dp[i - 1][j]。
 
-```cpp
-
 class Solution {
 public:
     int minPathSum(vector<vector<int>>& grid) {
@@ -20,5 +18,3 @@ public:
         return dp[m - 1][n - 1];
     }
 };
-
-```
