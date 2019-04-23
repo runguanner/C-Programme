@@ -1,16 +1,16 @@
 // 总结七种排序算法的C++代码（https://blog.csdn.net/liqinzhe11/article/details/78743743）
 
 
-/*
-    算法	  平均时间复杂度	  最好情况	  最坏情况	  空间复杂度	      稳定性
-  冒泡排序	   O(N^2)	       O(N)	      O(N^2)	     O(1)	      稳定
-  插入排序	   O(N^2)	       O(N)	      O(N^2)	     O(1)	      稳定
-  选择排序	   O(N^2)	       O(N^2)	  O(N^2)	     O(1)	      稳定
-  希尔排序	  O(N^3/2)	 	              O(N^2)	     O(1)	    不稳定
-  堆排序	   O(NlogN)	     O(NlogN)	  O(NlogN)	    O(1)	     不稳定
-  归并排序	  O(NlogN)	    O(NlogN)	 O(NlogN)	     O(N)	      稳定
-  快速排序	  O(NlogN)	    O(NlogN)	  O(N^2)	    O(logN)	    不稳定
-*/
+
+//    算法	  平均时间复杂度	  最好情况	  最坏情况	  空间复杂度	      稳定性
+//  冒泡排序	   O(N^2)	       O(N)	      O(N^2)	     O(1)	      稳定
+//  插入排序	   O(N^2)	       O(N)	      O(N^2)	     O(1)	      稳定
+//  选择排序	   O(N^2)	       O(N^2)	  O(N^2)	     O(1)	      稳定
+//  希尔排序	  O(N^3/2)	 	              O(N^2)	     O(1)	    不稳定
+//  堆排序	       O(NlogN)	     O(NlogN)	  O(NlogN)	      O(1)	     不稳定
+//  归并排序	  O(NlogN)	    O(NlogN)	 O(NlogN)	     O(N)	      稳定
+//  快速排序	  O(NlogN)	    O(NlogN)	  O(N^2)	    O(logN)	    不稳定
+
 
 
 // 插入排序类（1、2）
