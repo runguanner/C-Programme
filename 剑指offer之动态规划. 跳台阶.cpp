@@ -56,3 +56,19 @@ public:
 };
 
 
+// Follow up 2: Min Cost Climbing Stairs
+// 每当你爬上一个阶梯你都要花费对应的体力花费值，然后你可以选择继续爬一个阶梯或者爬两个阶梯。求最小体力值消耗。
+
+class Solution
+{
+public:
+    int minCostClimbingStairs(vector<int>& cost) {
+        int n = cost.size();
+        vector<int> dp(n + 1, 0);
+        for(int i = 2; i < n + 1; i++) {
+            dp[i] = min(dp[i - 1] + cost[i - 1], dp[i - 2] + cost[i - 2]);
+        }//如何才能到第i层呢？是不是只有两种可能性，一个是从第i-2层上直接跳上来，一个是从第i-1层上跳上来。
+        return dp.back();
+    }
+};
+
