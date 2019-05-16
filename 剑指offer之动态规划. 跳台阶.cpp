@@ -34,3 +34,25 @@ public:
         return memo[n] = helper(n - 1, memo) + helper(n - 2, memo);
     }
 };
+
+
+
+// Follow up：变态爬楼梯
+
+//1层台阶， 1   1种 
+//2层台阶，11，2   2种 
+//3层台阶，111，12，21，3      4种 
+//4层台阶，1111，112，121，13，211，22，31，4    8种 
+//5层台阶，11111，1112，1121，113，1211，122，131，14，2111，212，221，23，311，32，41，5   16种 
+//由数学归纳法可知：an = 2^(n - 1)
+
+
+class Solution {
+public:
+    int jumpFloorII(int number) {
+        if(number <= 1) return 1;
+        return 2 * jumpFloorII(number - 1);
+    }
+};
+
+
