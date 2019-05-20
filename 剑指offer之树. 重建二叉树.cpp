@@ -56,9 +56,10 @@ public:
     using iter = vector<int>::iterator;
     TreeNode* reConstructOneLevel(iter pre_begin, iter pre_end, iter vin_begin, iter vin_end) {//这里用迭代器需4个形参
         if(pre_begin == pre_end || vin_begin == vin_end) return nullptr;//递归出口一（除结尾外还需要一个内部return,即两个return吧）
-        //先找根节点（用前序遍历序列）具体只用求左子树序列长度就可以了
+        //先找根节点（用前序遍历序列）
+        TreeNode *root = new TreeNode(*pre_begin);
+        //在找左子树和右子树（用中序遍历序列） （具体只用求左子树序列长度就可以了）
         vector<int>::iterator vin_root_pos = find(vin_begin, vin_end, root->val);//由于序列中不含重复元素，故可以用此方法
-        //再找左子树和右子树（用中序遍历序列）
         int leftLength = vin_root_pos - vin_begin;//左子树序列长度
         // ！！注意end指向容器末尾（最后一个元素的下一个位置）
         root->left = reConstructOneLevel(pre_begin + 1, pre_begin + leftLength + 1, vin_begin, vin_root_pos);//左子树
