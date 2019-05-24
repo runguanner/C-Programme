@@ -59,16 +59,17 @@ public:
        
     }
 };
-*/
+
 /*
-    // 用自定义函数对象排序
-    struct
-    {
-        bool operator()(int a, int b) const
-        {  
-            return a > b;
-        }  
-    }customMore;
+ // 用自定义函数对象排序
+ struct
+ {
+     bool operator()(int a, int b) const
+     {  
+         return a > b;
+     }  
+ }customMore;
 */
+
 
 
