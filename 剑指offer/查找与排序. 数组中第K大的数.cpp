@@ -1,4 +1,4 @@
-/最小堆、partition函数
+//最小堆、partition函数
 
 
 //方法一：最小堆
@@ -44,5 +44,31 @@ public:
         return r;
     }
 };
+
+
+#include <algorithm>
+class Solution
+{
+public:   
+    int findKthLargest(vector<int>& nums, int k)
+    {
+        //nth_element(nums.begin(), nums.begin()+k-1, nums.end(),customMore);
+        nth_element(nums.begin(), nums.begin()+k-1, nums.end(),greater<int>()); //原理为快排
+        //这里直接用STL里的函数，比较函数设置为greater(默认为小数在前)，注意中间(k-1)表示第k个最大的数
+        return nums[k-1]; //第k个数，注意这里索引为k-1
+       
+    }
+};
+*/
+/*
+    // 用自定义函数对象排序
+    struct
+    {
+        bool operator()(int a, int b) const
+        {  
+            return a > b;
+        }  
+    }customMore;
+*/
 
 
